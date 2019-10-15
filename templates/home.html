@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Exo&display=swap" rel="stylesheet">
+        <title>Home</title>
+        
+        <style>
+            .chatWindow{
+                width:50%;
+                margin:auto;
+                height:80vh;
+                overflow-y: auto;
+                background-color: #eaf2f9;
+            }
+
+            .chatRight{
+                word-break: break-all;
+                float:right;
+                max-width:75%;
+                /*background-color: #a1cbf1;#a1cbf16b;*/
+                background-color: #ffff;/*#a1cbf11a;#a1cbf16b;*/
+		color:#a1cbf1!important;
+                border-radius:0.5rem;
+                font-family:museo-slab,Georgia,"Times New Roman",Times,serif;
+            }
+
+            .chatLeft{
+                word-break: break-all;
+                float:left;
+                max-width:75%;
+                background-color: #a1cbf1;
+                /*background-color: #ffff;#a1cbf11a;#a1cbf16b;
+		color:#a1cbf1!important;*/
+                border-radius:0.5rem;
+                font-family:museo-slab,Georgia,"Times New Roman",Times,serif;
+            }
+
+            .typeMessage{
+                width:50%;
+                margin:auto;
+            }
+
+            .typeMessage input{
+                width:95%;
+            }
+            
+            .typeMessage button{
+                background-color: transparent;
+                border: none;
+            }
+
+            .clearfix {
+                clear:both
+            }
+            .typeMessage form input{
+                font-family:museo-slab,Georgia,"Times New Roman",Times,serif;
+            }
+/*
+            ::-webkit-scrollbar-thumb {
+                background: #ffff !important;
+            }
+*/
+            ::-webkit-scrollbar {
+                width: 5px;
+                height: 3px;
+                background: #0088ff26;
+            }
+        </style>
+        
+        <script>
+            let scrollMy=function(){
+                let val=$('.typeMessage form input').val();
+                $('.typeMessage form input').val("");
+                $(".chatWindow").append('<div class="chatRight text-white p-2 m-3">'+val+'</div>').append('<div class="clearfix"></div>');
+                
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    $(".chatWindow").append('<div class="chatLeft text-white p-2 m-3">'+this.responseText+'</div>').append('<div class="clearfix"></div>');
+                    $(".chatWindow")[0].scrollTop=$(".chatWindow")[0].scrollHeight;
+                    //$(".chatWindow")[0].scrollTop=$(".chatWindow").height();
+                    //$(".chatWindow")[0].scrollTop+=100;
+                    console.log($(".chatWindow")[0].scrollTop,$(".chatWindow").height(),$(".chatWindow")[0].scrollHeight);
+                 //document.getElementById("demo").innerHTML = this.responseText;
+                }
+                };
+                xhttp.open("GET", "/resp/"+val, true);
+                xhttp.send();
+                
+            }
+            $(document).on('keypress',function(e) {
+                if(e.which == 13) {
+                    e.preventDefault();
+                    scrollMy();
+                }
+            });
+            
+            $(document).on("click",".sendMessage",function(){
+                scrollMy();
+            });
+        </script>
+        
+    </head>
+    <body>
+	<h1 class="text-center">Admission Query chatbot</h1>
+    
+        <div class="chatWindow">
+            <!--<div class="chatLeft p-2 m-3">adasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfasadasfsdfsfsfsfsdfabcdefghijklmnopqrstuvwxyz-->
+            <!--</div>-->
+            <!--<div class="clearfix"></div>-->
+            <!--<div class="chatRight p-2 m-3">sadsada</div>-->
+            <!--<div class="clearfix"></div>-->
+        </div>
+        <div class="typeMessage my-3">
+        <form>
+            <input type="text" name="usermsg">
+            <span class="sendMessage"><i class="fa fa-paper-plane" aria-hidden="true"></i></span>
+        </form>
+        </div>
+    
+    
+    
+    
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
